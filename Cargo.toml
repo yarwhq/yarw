@@ -6,6 +6,11 @@ members = [
     "apps/*",
 ]
 
+
+[workspace.package]
+license = "GPL-3.0-only"
+repository = "https://github.com/yarwhq/yarw"
+
 [workspace.dependencies]
 tokio = { version = "1.35.1", features = ["full"] }
 thiserror = "1.0.52"
