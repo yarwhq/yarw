@@ -1,7 +1,7 @@
 use std::env;
 
 use clap::Parser;
-use log::{error, debug};
+use log::{debug, error};
 use yarw_cli::args::Args;
 
 #[tokio::main]

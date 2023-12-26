@@ -3,11 +3,7 @@ use clap::Parser;
 use uuid::Uuid;
 
 #[derive(Debug, Parser, PartialEq, Eq)]
-#[command(
-arg_required_else_help = true,
-about,
-version,
-)]
+#[command(arg_required_else_help = true, about, version)]
 pub struct Args {
     #[clap(short, long, action = ArgAction::Count)]
     pub verbose: u8,
@@ -36,4 +32,3 @@ pub enum ProfileSubcommand {
     },
     List,
 }
-

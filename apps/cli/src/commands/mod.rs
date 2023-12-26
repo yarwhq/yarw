@@ -1,2 +1,2 @@
-pub mod profile;
 pub mod player;
+pub mod profile;
