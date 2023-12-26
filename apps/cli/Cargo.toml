@@ -1,0 +1,17 @@
+[package]
+name = "yarw_cli"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "yarw"
+path = "src/main.rs"
+
+[dependencies]
+clap = { version = "4.4.11", features = ["derive"] }
+yarw_core = { path = "../../core" }
+uuid ={ workspace = true }
+tokio = { workspace = true }
+thiserror = { workspace = true }
+log = { workspace = true }
+pretty_env_logger = { workspace = true }
