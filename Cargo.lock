@@ -946,7 +946,7 @@ checksum = "dff9641d1cd4be8d1a070daf9e3773c5f67e78b4d9d42263020c057706765c04"
 
 [[package]]
 name = "yarw_cli"
-version = "0.1.0"
+version = "0.0.0"
 dependencies = [
  "clap",
  "log",
@@ -959,7 +959,7 @@ dependencies = [
 
 [[package]]
 name = "yarw_core"
-version = "0.1.0"
+version = "0.0.0"
 dependencies = [
  "bincode",
  "directories",
