@@ -20,12 +20,12 @@ pub enum ConfigError {
 /// let mut config = Config::load()
 ///
 /// // You can use values directly from the Config
-/// println!("{:?}", config.defaults.wineroot_location);
+/// println!("{:?}", config.defaults.wineroot_path);
 ///
 /// // Change values in Config
 /// // in this case, we're changing the values for "Defaults" struct
 /// let new_defaults = Defaults {
-///     wineroot_location: String::from("/wineroot"),
+///     wineroot_path: String::from("/wineroot"),
 /// };
 /// config.update_defaults(new_defaults);
 ///
@@ -38,7 +38,7 @@ pub struct Config {
 
 #[derive(Serialize, Deserialize, Debug, Default)]
 pub struct Defaults {
-    pub wineroot_location: PathBuf,
+    pub wineroot_path: PathBuf,
 }
 
 lazy_static::lazy_static! {
