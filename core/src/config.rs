@@ -4,6 +4,8 @@ use thiserror::Error;
 
 use crate::dirs::CONFIG;
 
+use yarw_utils::fs::{create_dirs_all_vec, FsError};
+
 #[derive(Debug, Error)]
 pub enum ConfigError {
     #[error("Error occurred with DB: {0}")]
@@ -11,6 +13,9 @@ pub enum ConfigError {
 
     #[error("Error occurred with bincode: {0}")]
     BincodeError(#[from] bincode::Error),
+
+    #[error("Error occurred with utils: {0}")]
+    FsUtilsError(#[from] FsError),
 }
 
 #[derive(Serialize, Deserialize, Debug, Default)]
@@ -46,6 +51,7 @@ impl Config {
     }
 
     pub fn load() -> Result<Self, ConfigError> {
+        create_dirs_all_vec(vec![CONFIG.as_path()]).map_err(ConfigError::FsUtilsError)?;
         let tree = sled::open(DB_PATH.as_path()).map_err(ConfigError::DbError)?;
 
         if let Some(serialized_data) = tree.get(b"config").map_err(ConfigError::DbError)? {

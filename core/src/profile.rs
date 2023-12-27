@@ -5,6 +5,8 @@ use uuid::Uuid;
 
 use crate::dirs::CONFIG;
 
+use yarw_utils::fs::{create_dirs_all_vec, FsError};
+
 #[derive(Serialize, Deserialize, Debug, Default)]
 pub struct Profile {
     pub name: String,
@@ -30,6 +32,9 @@ pub enum ProfileError {
 
     #[error("Error occurred with bincode: {0}")]
     BincodeError(#[from] bincode::Error),
+
+    #[error("Error occurred with utils: {0}")]
+    FsUtilsError(#[from] FsError),
 
     #[error("Profile does not exist")]
     ProfileNotExist,
@@ -72,6 +77,7 @@ impl ProfileManager {
     }
 
     pub fn load() -> Result<Self, ProfileError> {
+        create_dirs_all_vec(vec![CONFIG.as_path()]).map_err(ProfileError::FsUtilsError)?;
         let tree = sled::open(DB_PATH.as_path()).map_err(ProfileError::DbError)?;
 
         if let Some(serialized_data) = tree.get(b"profiles").map_err(ProfileError::DbError)? {

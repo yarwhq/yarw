@@ -16,3 +16,4 @@ thiserror = { workspace = true }
 bincode = "1.3.3"
 lazy_static = "1.4.0"
 uuid = { workspace = true, features = ["v4"] }
+yarw_utils = { path = "../crates/utils" }
