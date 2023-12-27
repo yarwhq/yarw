@@ -973,3 +973,11 @@ dependencies = [
  "thiserror",
  "uuid",
 ]
+
+[[package]]
+name = "yarw_utils"
+version = "0.1.0"
+dependencies = [
+ "lazy_static",
+ "thiserror",
+]
