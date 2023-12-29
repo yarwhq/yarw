@@ -25,9 +25,9 @@ pub enum Subcommand {
 pub enum ProfileSubcommand {
     Create,
     Delete {
-        #[clap(short, long, conflicts_with = "name")]
+        #[clap(short, long, conflicts_with = "name", required = true)]
         uuid: Option<Uuid>,
-        #[clap(short, long, conflicts_with = "uuid")]
+        #[clap(short, long, conflicts_with = "uuid", required = true)]
         name: Option<String>,
     },
     List,
