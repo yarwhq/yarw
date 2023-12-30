@@ -17,7 +17,7 @@ pub enum CommandError {
 
 pub async fn run(args: Args) -> Result<(), CommandError> {
     if let Some(subcommand) = args.subcommand {
-        let result = match subcommand {
+        match subcommand {
             Subcommand::Player => todo!(),
             Subcommand::Studio => todo!(),
             Subcommand::Profile(profile_subcommand) => {
@@ -38,9 +38,7 @@ pub async fn run(args: Args) -> Result<(), CommandError> {
                     ProfileSubcommand::List => commands::profile::list(&profile_manager),
                 }
             }
-        };
-
-        result
+        }
     } else {
         unreachable!("Missing subcommand");
     }

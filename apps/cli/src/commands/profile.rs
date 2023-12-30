@@ -62,14 +62,14 @@ pub fn delete(
         match profile_manager.delete(uuid) {
             Ok(()) => {
                 profile_manager.save()?;
-                println!("{}", uuid.to_string());
+                println!("{}", uuid);
             }
             Err(err) => match err {
                 ProfileError::ProfileNotExist => {
                     println!("Profile not found");
                 }
                 _ => {
-                    return Err(CommandError::ProfileManagerError(err))?;
+                    Err(CommandError::ProfileManagerError(err))?;
                 }
             },
         }
