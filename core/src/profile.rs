@@ -11,8 +11,18 @@ use yarw_utils::fs::{create_dirs_all_vec, FsError};
 pub struct Profile {
     pub name: String,
     pub roblox: RobloxType,
+    pub renderer: Renderer,
     pub fflags: HashMap<String, FFlagValue>,
 }
+
+#[derive(Serialize, Deserialize, Debug, Default)]
+pub enum Renderer {
+    #[default]
+    D3D11,
+    Vulkan,
+    OpenGL,
+}
+
 
 #[derive(Serialize, Deserialize, Debug, Default)]
 pub enum RobloxType {

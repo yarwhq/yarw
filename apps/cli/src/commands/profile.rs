@@ -2,7 +2,7 @@ use std::collections::HashMap;
 
 use dialoguer::{theme::ColorfulTheme, Input, Select};
 use uuid::Uuid;
-use yarw_core::profile::{FFlagValue, Profile, ProfileError, ProfileManager, RobloxType};
+use yarw_core::profile::{FFlagValue, Profile, ProfileError, ProfileManager, RobloxType, Renderer};
 
 use crate::CommandError;
 
@@ -23,6 +23,21 @@ pub async fn create(profile_manager: &mut ProfileManager) -> Result<(), CommandE
     let roblox_type = match selection {
         0 => RobloxType::RobloxPlayer,
         1 => RobloxType::RobloxStudio,
+        _ => unreachable!(),
+    };
+
+    let renderer_selection = &["D3D11", "Vulkan", "OpenGL"];
+    let selection = Select::with_theme(&ColorfulTheme::default())
+        .with_prompt("Select renderer:")
+        .items(renderer_selection)
+        .default(0)
+        .interact()
+        .map_err(CommandError::DialoguerError)?;
+
+    let renderer = match selection {
+        0 => Renderer::D3D11,
+        1 => Renderer::Vulkan,
+        2 => Renderer::OpenGL,
         _ => unreachable!(),
     };
 
@@ -79,6 +94,7 @@ pub async fn create(profile_manager: &mut ProfileManager) -> Result<(), CommandE
     let profile = Profile {
         name: profile_name,
         roblox: roblox_type,
+        renderer,
         fflags,
     };
 
@@ -101,6 +117,7 @@ pub fn list(profile_manager: &ProfileManager) -> Result<(), CommandError> {
         println!("Profile UUID: {}", uuid);
         println!("Name: {}", profile.name);
         println!("RobloxType: {:?}", profile.roblox);
+        println!("Renderer: {:?}", profile.renderer);
         println!("FFlags: {:?}", profile.fflags);
         println!("---------------------");
     }
