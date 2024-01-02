@@ -12,7 +12,15 @@ pub struct Profile {
     pub name: String,
     pub roblox: RobloxType,
     pub renderer: Renderer,
+    pub installer: Installer,
     pub fflags: HashMap<String, FFlagValue>,
+}
+
+#[derive(Serialize, Deserialize, Debug, Default)]
+pub enum Installer {
+    #[default]
+    OfficialInstaller,
+    CustomInstaller,
 }
 
 #[derive(Serialize, Deserialize, Debug, Default)]

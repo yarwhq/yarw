@@ -2,7 +2,9 @@ use std::collections::HashMap;
 
 use dialoguer::{theme::ColorfulTheme, Input, Select};
 use uuid::Uuid;
-use yarw_core::profile::{FFlagValue, Profile, ProfileError, ProfileManager, Renderer, RobloxType};
+use yarw_core::profile::{
+    FFlagValue, Installer, Profile, ProfileError, ProfileManager, Renderer, RobloxType,
+};
 
 use crate::CommandError;
 
@@ -38,6 +40,20 @@ pub async fn create(profile_manager: &mut ProfileManager) -> Result<(), CommandE
         0 => Renderer::D3D11,
         1 => Renderer::Vulkan,
         2 => Renderer::OpenGL,
+        _ => unreachable!(),
+    };
+
+    let installer_selection = &["Official Installer", "Yarw Installer"];
+    let selection = Select::with_theme(&ColorfulTheme::default())
+        .with_prompt("Select installer:")
+        .items(installer_selection)
+        .default(0)
+        .interact()
+        .map_err(CommandError::DialoguerError)?;
+
+    let installer = match selection {
+        0 => Installer::OfficialInstaller,
+        1 => Installer::CustomInstaller,
         _ => unreachable!(),
     };
 
@@ -95,6 +111,7 @@ pub async fn create(profile_manager: &mut ProfileManager) -> Result<(), CommandE
         name: profile_name,
         roblox: roblox_type,
         renderer,
+        installer,
         fflags,
     };
 
@@ -118,6 +135,7 @@ pub fn list(profile_manager: &ProfileManager) -> Result<(), CommandError> {
         println!("Name: {}", profile.name);
         println!("RobloxType: {:?}", profile.roblox);
         println!("Renderer: {:?}", profile.renderer);
+        println!("Installer: {:?}", profile.installer);
         println!("FFlags: {:?}", profile.fflags);
         println!("---------------------");
     }
