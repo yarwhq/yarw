@@ -21,6 +21,15 @@ pub enum RobloxType {
     RobloxStudio,
 }
 
+impl RobloxType {
+    pub fn binary_name(&self) -> &str {
+        match self {
+            RobloxType::RobloxPlayer => "WindowsPlayer",
+            RobloxType::RobloxStudio => "WindowsStudio64",
+        }
+    }
+}
+
 #[derive(Serialize, Deserialize, Debug)]
 pub enum FFlagValue {
     String(String),
