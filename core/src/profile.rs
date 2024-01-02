@@ -11,6 +11,7 @@ use yarw_utils::fs::{create_dirs_all_vec, FsError};
 pub struct Profile {
     pub name: String,
     pub roblox: RobloxType,
+    pub fflags: HashMap<String, FFlagValue>,
 }
 
 #[derive(Serialize, Deserialize, Debug, Default)]
@@ -18,6 +19,13 @@ pub enum RobloxType {
     #[default]
     RobloxPlayer,
     RobloxStudio,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+pub enum FFlagValue {
+    String(String),
+    Number(i64),
+    Boolean(bool),
 }
 
 #[derive(Serialize, Deserialize, Debug, Default)]

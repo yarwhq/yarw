@@ -1,6 +1,8 @@
+use std::collections::HashMap;
+
 use dialoguer::{theme::ColorfulTheme, Input, Select};
 use uuid::Uuid;
-use yarw_core::profile::{Profile, ProfileError, ProfileManager, RobloxType};
+use yarw_core::profile::{FFlagValue, Profile, ProfileError, ProfileManager, RobloxType};
 
 use crate::CommandError;
 
@@ -24,9 +26,60 @@ pub async fn create(profile_manager: &mut ProfileManager) -> Result<(), CommandE
         _ => unreachable!(),
     };
 
+    let mut fflags = HashMap::new();
+    loop {
+        let fflags_selection = &["Yes", "No"];
+        let selection = Select::with_theme(&ColorfulTheme::default())
+            .with_prompt("Do you want to add FFlags?:")
+            .items(fflags_selection)
+            .default(0)
+            .interact()
+            .map_err(CommandError::DialoguerError)?;
+
+        if selection == 0 {
+            let fflag_name: String = Input::with_theme(&ColorfulTheme::default())
+                .with_prompt("FFlag name:")
+                .interact()
+                .unwrap();
+
+            let fflag_value: FFlagValue = match Select::with_theme(&ColorfulTheme::default())
+                .with_prompt("Select FFlag type:")
+                .items(&["String", "Number", "Boolean"])
+                .default(0)
+                .interact()
+                .map_err(CommandError::DialoguerError)?
+            {
+                0 => FFlagValue::String(
+                    Input::with_theme(&ColorfulTheme::default())
+                        .with_prompt("FFlag value (String):")
+                        .interact()
+                        .map_err(CommandError::DialoguerError)?,
+                ),
+                1 => FFlagValue::Number(
+                    Input::with_theme(&ColorfulTheme::default())
+                        .with_prompt("FFlag value (Number):")
+                        .interact()
+                        .map_err(CommandError::DialoguerError)?,
+                ),
+                2 => FFlagValue::Boolean(
+                    Input::with_theme(&ColorfulTheme::default())
+                        .with_prompt("FFlag value (Boolean):")
+                        .interact()
+                        .map_err(CommandError::DialoguerError)?,
+                ),
+                _ => unreachable!(),
+            };
+
+            fflags.insert(fflag_name, fflag_value);
+        } else {
+            break;
+        }
+    }
+
     let profile = Profile {
         name: profile_name,
         roblox: roblox_type,
+        fflags,
     };
 
     let uuid = profile_manager.create(profile)?;
@@ -48,6 +101,7 @@ pub fn list(profile_manager: &ProfileManager) -> Result<(), CommandError> {
         println!("Profile UUID: {}", uuid);
         println!("Name: {}", profile.name);
         println!("RobloxType: {:?}", profile.roblox);
+        println!("FFlags: {:?}", profile.fflags);
         println!("---------------------");
     }
     Ok(())
