@@ -2,7 +2,7 @@ use std::collections::HashMap;
 
 use dialoguer::{theme::ColorfulTheme, Input, Select};
 use uuid::Uuid;
-use yarw_core::profile::{FFlagValue, Profile, ProfileError, ProfileManager, RobloxType, Renderer};
+use yarw_core::profile::{FFlagValue, Profile, ProfileError, ProfileManager, Renderer, RobloxType};
 
 use crate::CommandError;
 
