@@ -17,7 +17,7 @@ description = "Yet another Roblox wrapper"
 tokio = { version = "1.35.1", features = ["full"] }
 thiserror = "1.0.56"
 log = "0.4.20"
-uuid = { version = "1.6.1" }
+uuid = { version = "1.8.0" }
 pretty_env_logger = "0.5.0"
 serde = { version = "1.0.193", features = ["derive"] }
 serde_json = "1.0.108" 
