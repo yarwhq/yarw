@@ -10,7 +10,7 @@ name = "yarw"
 path = "src/main.rs"
 
 [dependencies]
-clap = { version = "4.4.11", features = ["derive"] }
+clap = { version = "4.5.4", features = ["derive"] }
 yarw_core = { path = "../../core" }
 uuid ={ workspace = true }
 tokio = { workspace = true }
