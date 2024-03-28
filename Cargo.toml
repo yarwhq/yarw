@@ -14,7 +14,7 @@ repository = "https://github.com/yarwhq/yarw"
 description = "Yet another Roblox wrapper"
 
 [workspace.dependencies]
-tokio = { version = "1.35.1", features = ["full"] }
+tokio = { version = "1.37.0", features = ["full"] }
 thiserror = "1.0.56"
 log = "0.4.20"
 uuid = { version = "1.6.1" }
